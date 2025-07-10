@@ -1,0 +1,167 @@
+@import "mocha.css";
+
+* {
+  font-family: DroidSansMono;
+  font-size: 15px;
+  min-height: 0;
+}
+
+/*window#waybar {
+    background-color: shade(@base, 0.9);
+    border: 2px solid alpha(@crust, 0.3);
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}*/
+
+#waybar {
+    background: transparent;
+    color: @text;
+    margin: 5px 5px;
+}
+
+#custom-os-logo {
+    border-radius: 1rem;
+    margin: 5px;
+    background-color: @surface0;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+}
+
+#window {
+    border-radius: 1rem;
+    margin: 5px;
+    background-color: @surface0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+window#waybar.empty #window {
+    padding: 0;
+}
+
+#workspaces {
+    border-radius: 1rem;
+    margin: 5px;
+    background-color: @surface0;
+    margin-left: 1rem;
+}
+
+#workspaces button {
+  color: @red;
+  border-radius: 1rem;
+  padding: 0.4rem;
+}
+
+#workspaces button.empty {
+  color: @lavender;
+}
+
+#workspaces button.active {
+  color: @sky;
+  border-radius: 1rem;
+}
+
+#workspaces button:hover {
+  color: @sapphire;
+  border-radius: 1rem;
+}
+
+#privacy,
+#custom-recording,
+#custom-music,
+#tray,
+#cpu,
+#temperature,
+#idle_inhibitor,
+#backlight,
+#clock,
+#battery,
+#pulseaudio,
+#custom-lock,
+#custom-power {
+  background-color: @surface0;
+  padding: 0.5rem 1rem;
+  margin: 5px 0;
+}
+
+#custom-recording {
+  border-radius: 1rem 0px 0px 1rem;
+  margin-left: 1rem;
+}
+
+.recording {
+  color: red;
+}
+
+#clock {
+  color: @blue;
+  /*border-radius: 1rem 0px 0px 1rem;
+  margin-left: 1rem;*/
+}
+
+#battery {
+  color: @green;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.warning:not(.charging) {
+  color: @red;
+}
+
+#backlight {
+  color: @yellow;
+}
+
+#backlight, #battery {
+  border-radius: 0;
+}
+
+#idle_inhibitor {
+}
+
+#cpu {
+  color: @green;
+}
+
+#temperature {
+  border-radius: 0px 1rem 1rem 0px;
+  margin-right: 1rem;
+  padding-right: 1.5rem;
+}
+
+#temperature.critical {
+  color: #E42022;
+}
+
+#pulseaudio {
+  color: @maroon;
+}
+
+#custom-music {
+  color: @mauve;
+  border-radius: 1rem;
+}
+
+#custom-lock {
+    padding-left: 1.2rem;
+    border-radius: 1rem 0px 0px 1rem;
+    color: @lavender;
+}
+
+#custom-power {
+    margin-right: 1rem;
+    padding-right: 0.6rem;
+    border-radius: 1rem 1rem 1rem 1rem;
+    color: @red;
+}
+
+#tray {
+  margin-right: 1rem;
+  border-radius: 1rem;
+}

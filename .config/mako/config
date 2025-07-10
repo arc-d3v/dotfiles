@@ -1,0 +1,10 @@
+default-timeout=5000
+ignore-timeout=1
+background-color=#1a1b2690
+border-color=#313244
+border-radius=5
+
+[urgency=high]
+border-color=#FF0000
+default-timeout=0
+

@@ -1,0 +1,16 @@
+[colors.primary]
+background = "#1A1B26"
+
+[font]
+size = 11
+[font.normal]
+family = "JetbrainsMono Nerd Font"
+
+[window.padding]
+x = 4
+y = 4
+
+#[cursor]
+#style.shape="Beam"
+#style.blinking="Always"
+#vi_mode_style="Beam"
