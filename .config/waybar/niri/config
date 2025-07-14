@@ -3,13 +3,13 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["custom/music"],
     "modules-right": ["custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
     "custom/os-logo": {
         "format": ""
     },
-    "hyprland/workspaces": {
+    "niri/workspaces": {
          "disable-scroll": true,
          "sort-by-name": true,
          "format": " {icon} ",
@@ -21,7 +21,7 @@
 	     "*": [ 1, 2, 3, 4, 5 ]
 	 },
      },
-     "hyprland/window": {
+     "niri/window": {
          "format": "{title}",
 	 "icon": true,
 	 // "seperate-outputs": true,
