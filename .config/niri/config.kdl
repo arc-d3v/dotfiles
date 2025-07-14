@@ -481,10 +481,10 @@ binds {
     //Mod+Shift+K     { focus-monitor-up; }
     //Mod+Shift+L     { focus-monitor-right; }
 
-    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Alt+Left  { move-column-to-monitor-left; }
+    Mod+Alt+Down  { move-column-to-monitor-down; }
+    Mod+Alt+Up    { move-column-to-monitor-up; }
+    Mod+Alt+Right { move-column-to-monitor-right; }
     //Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
     //Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
     //Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
