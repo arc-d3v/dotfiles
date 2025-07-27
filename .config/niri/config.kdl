@@ -272,9 +272,11 @@ environment {
     DISPLAY ":12"
     XCURSOR_SIZE "24"
     XDG_MENU_PREFIX "niri-session-"
-    QT_QPA_PLATFORMTHEME "qt6ct"
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "qt5ct"
     XDG_CURRENT_DESKTOP "niri"
-    XDG_SESSION_DESKTOP "niri"
+    XDG_SESSION_DESKTOP "niri-session"
+    XDG_SESSION_TYPE "wayland"
     XDG_BACKEND "wayland"
     QT_QPA_PLATFORM "wayland"
     GTK_THEME "Tokyonight-Dark"
@@ -364,7 +366,7 @@ window-rule {
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 10
     clip-to-geometry true
 }
 
@@ -377,19 +379,55 @@ window-rule {
     match app-id=r"^Alacritty$"
     match app-id=r"^foot$"
     match app-id=r"^fluffychat$"
+    match app-id=r"^org.*.wezterm$"
+    match app-id=r"^Element$"
+    match app-id=r"^discord$"
+    match app-id=r"^Slack$"
+    match app-id=r"^krita$"
     opacity 0.9
 }
 
 window-rule {
-    match app-id=r"^(steam)$"
+    match app-id=r"^steam$"
     match app-id=r"^jetbrains-*"
     opacity 0.95
     draw-border-with-background false
 }
 
 window-rule {
-   match app-id=r"^steam$"
-   open-on-workspace "steam"
+    match app-id=r"^Element$"
+    match app-id=r"^discord$"
+    match app-id=r"^fluffychat$"
+    open-on-output "DP-2"
+}
+
+window-rule {
+    match app-id=r"^steam$"
+    open-on-workspace "steam"
+}
+
+window-rule {
+    match app-id=r"^chromium$"
+    match app-id=r"^steam$"
+    match app-id=r"^krita$"
+    open-maximized true
+}
+
+window-rule {
+    match app-id=r"^steam$"
+    exclude title="Steam"
+    open-floating true
+}
+
+window-rule {
+    match app-id=r"^org.*.wezterm$"
+    default-column-width { proportion 0.50; }
+}
+
+window-rule {
+    match app-id=r"^XEyes$"
+    match app-id=r"^imv$"
+    open-floating true
 }
 
 hotkey-overlay {
@@ -417,9 +455,9 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Q hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
+    Mod+Q hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
     Mod+R hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-show-icons"; }
-    Mod+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "sh" "-c" "pidof hyprlock || hyprlock"; }
+    Mod+L hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "pidof hyprlock || hyprlock"; }
     Mod+E hotkey-overlay-title="Open thunar" { spawn "thunar"; }
     Mod+B hotkey-overlay-title="Open chromium" { spawn "chromium"; }
     Mod+Escape { spawn "sh" "-c" "pidof wlogout || wlogout"; }
@@ -522,8 +560,8 @@ binds {
     // To avoid scrolling through workspaces really fast, you can use
     // the cooldown-ms property. The bind will be rate-limited to this value.
     // You can set a cooldown on any bind, but it's most useful for the wheel.
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Shift+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+Shift+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
     Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
@@ -534,8 +572,8 @@ binds {
 
     // Usually scrolling up and down with Shift in applications results in
     // horizontal scrolling; these binds replicate that.
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+WheelScrollDown      { focus-column-right; }
+    Mod+WheelScrollUp        { focus-column-left; }
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
