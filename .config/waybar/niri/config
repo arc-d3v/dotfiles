@@ -5,7 +5,7 @@
     // Choose the order of the modules
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["custom/music"],
-    "modules-right": ["custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
+    "modules-right": ["idle_inhibitor", "custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
     "custom/os-logo": {
         "format": ""
     },
@@ -16,10 +16,10 @@
 	 // "all-outputs": true,
          "format-icons": {
              "default": " ",
-         },
-	 "persistent-workspaces": {
+         }
+	 /*"persistent-workspaces": {
 	     "*": [ 1, 2, 3, 4, 5 ]
-	 },
+	 },*/
      },
      "niri/window": {
          "format": "{title}",
@@ -59,11 +59,11 @@
     },
     "custom/recording": {
         "format": "{}",
-	"interval": 1,
 	"return-type": "json",
 	"exec": "$HOME/.config/waybar/scripts/recording.sh status", 
 	"tooltip": true,
-	"signal": 8,
+	"signal": 20,
+	"restart-interval": 1,
 	"on-click": "$HOME/.config/waybar/scripts/recording.sh toggle"
     },
     "cpu": {
@@ -144,7 +144,8 @@
         "format-icons": {
             "default": [" ", " ", "  "]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     },
     "custom/lock": {
         "tooltip": false,

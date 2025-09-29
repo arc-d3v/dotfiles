@@ -5,7 +5,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["custom/music"],
-    "modules-right": ["custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
+    "modules-right": ["idle_inhibitor", "custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
     "custom/os-logo": {
         "format": ""
     },
@@ -13,32 +13,29 @@
          "disable-scroll": true,
          "sort-by-name": true,
          "format": " {icon} ",
-	 // "all-outputs": true,
+	 "all-outputs": false,
          "format-icons": {
              "default": " ",
          },
-	 "persistent-workspaces": {
-	     "*": [ 1, 2, 3, 4, 5 ]
-	 },
-     },
-     "hyprland/window": {
-         "format": "{title}",
-	 "icon": true,
-	 // "seperate-outputs": true,
-	 /*"rewrite" : {
-	     "Alacritty": "Alacritty",
-	     "chromium": "Chromium",
-	     "discord": "Discord",
-	     "steam": "Steam",
-	     "mullvad": "Mullvad",
-	     "spotify": "Spotify",
-	     "firefox": "Firefox",
-	     "gcr-prompter": "Keyring",
-	     "XIVLauncher.core": "XIVLauncher",
-	     "ffxiv_dx11.exe": "Final Fantasy XIV"
-	 }*/
-     },
-     "idle_inhibitor": {
+    },
+    "hyprland/window": {
+        "format": "{title}",
+	"icon": true,
+	// "seperate-outputs": true,
+	/*"rewrite" : {
+	    "Alacritty": "Alacritty",
+	    "chromium": "Chromium",
+	    "discord": "Discord",
+	    "steam": "Steam",
+	    "mullvad": "Mullvad",
+	    "spotify": "Spotify",
+	    "firefox": "Firefox",
+	    "gcr-prompter": "Keyring",
+	    "XIVLauncher.core": "XIVLauncher",
+	    "ffxiv_dx11.exe": "Final Fantasy XIV"
+        }*/
+    },
+    "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
             "activated": "",
@@ -59,7 +56,7 @@
     },
     "custom/recording": {
         "format": "{}",
-	"interval": 1,
+	"restart-interval": 1,
 	"return-type": "json",
 	"exec": "$HOME/.config/waybar/scripts/recording.sh status", 
 	"tooltip": true,
@@ -144,7 +141,8 @@
         "format-icons": {
             "default": [" ", " ", "  "]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+	"on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     },
     "custom/lock": {
         "tooltip": false,

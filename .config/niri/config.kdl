@@ -71,33 +71,6 @@ input {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
 output "DP-1" {
-    // Uncomment this line to disable this output.
-    // off
-
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    // mode "1920x1080@120.030"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    // scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    // transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
     position x=0 y=0
 }
 
@@ -234,7 +207,9 @@ layout {
         offset x=0 y=5
 
         // You can also change the shadow color and opacity.
-        color "#0007"
+	//color "#0007"
+	color "#595959aa"
+	inactive-color "#1E202966"
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -260,25 +235,23 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "sh" "-c" "waybar -c ~/.config/waybar/niri/config"
 spawn-at-startup "sh" "-c" "hypridle -c ~/.config/hypr/niri/hypridle.conf"
+spawn-at-startup "sh" "-c" "systemctl --user import-environment"
+//spawn-at-startup "sh" "-c" "sleep 0.5; systemctl --user start hyprpolkitagent"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "~/.wallpaper.sh"
-spawn-at-startup "xwayland-satellite" ":12"
+//spawn-at-startup "xwayland-satellite" ":12"
 spawn-at-startup "~/.config/niri/exec.sh"
 //spawn-at-startup "uwsm" "app" "--" "mullvad-vpn"
 //spawn-at-startup "uwsm" "app" "--" "chromium"
 //spawn-at-startup "uwsm" "app" "--" "steam"
 
 environment {
-    DISPLAY ":12"
+    //DISPLAY ":12"
     XCURSOR_SIZE "24"
-    XDG_MENU_PREFIX "niri-session-"
-    QT_QPA_PLATFORM "wayland"
-    QT_QPA_PLATFORMTHEME "qt5ct"
-    XDG_CURRENT_DESKTOP "niri"
+    XDG_MENU_PREFIX "arch-"
     XDG_SESSION_DESKTOP "niri-session"
     XDG_SESSION_TYPE "wayland"
     XDG_BACKEND "wayland"
-    QT_QPA_PLATFORM "wayland"
     GTK_THEME "Tokyonight-Dark"
 }
 
@@ -286,8 +259,16 @@ workspace "main" {
     open-on-output "DP-1"
 }
 
-workspace "steam" {
+workspace "main2" {
+    open-on-output "DP-2"
+}
+
+workspace "games" {
     open-on-output "DP-1"
+}
+
+workspace "mail" {
+    open-on-output "DP-2"
 }
 
 overview {
@@ -378,18 +359,23 @@ window-rule {
     match app-id=r"^thunar$"
     match app-id=r"^Alacritty$"
     match app-id=r"^foot$"
-    match app-id=r"^fluffychat$"
+    //match app-id=r"^fluffychat$"
     match app-id=r"^org.*.wezterm$"
     match app-id=r"^Element$"
     match app-id=r"^discord$"
     match app-id=r"^Slack$"
     match app-id=r"^krita$"
+    match app-id=r"^(.*)(Lutris)$"
+    match app-id="Proton Mail"
+    match app-id=r"^nheko$"
     opacity 0.9
 }
 
 window-rule {
     match app-id=r"^steam$"
     match app-id=r"^jetbrains-*"
+    match app-id=r"^(.*)(Lutris)$"
+    match app-id=r"^fluffychat$"
     opacity 0.95
     draw-border-with-background false
 }
@@ -398,12 +384,17 @@ window-rule {
     match app-id=r"^Element$"
     match app-id=r"^discord$"
     match app-id=r"^fluffychat$"
-    open-on-output "DP-2"
+    match app-id=r"^nheko$"
+    match app-id="Proton Mail"
+    open-on-workspace "mail"
+    open-focused false
 }
 
 window-rule {
     match app-id=r"^steam$"
-    open-on-workspace "steam"
+    match app-id=r"^(.*)(Lutris)$"
+    open-on-workspace "games"
+    open-focused false
 }
 
 window-rule {
@@ -434,6 +425,12 @@ hotkey-overlay {
     skip-at-startup
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
+
 //layer-rule {
 //    match namespace="^swww-daemon$"
 //    place-within-backdrop true
@@ -455,9 +452,9 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Q hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+    Mod+Q hotkey-overlay-title="Open a Terminal" { spawn "foot"; }
     Mod+R hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-show-icons"; }
-    Mod+L hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "pidof hyprlock || hyprlock"; }
+    Mod+L hotkey-overlay-title="Lock the Screen" allow-when-locked=true { spawn "sh" "-c" "pidof hyprlock || hyprlock"; }
     Mod+E hotkey-overlay-title="Open thunar" { spawn "thunar"; }
     Mod+B hotkey-overlay-title="Open chromium" { spawn "chromium"; }
     Mod+Escape { spawn "sh" "-c" "pidof wlogout || wlogout"; }
@@ -510,10 +507,10 @@ binds {
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
 
-    Mod+Shift+Left  { focus-monitor-left; }
-    Mod+Shift+Down  { focus-monitor-down; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Right { focus-monitor-right; }
+    Mod+Alt+WheelScrollUp          { focus-monitor-left; }
+    Mod+Ctrl+Shift+WheelScrollDown  { focus-monitor-down; }
+    Mod+Ctrl+Shift+WheelScrollUp    { focus-monitor-up; }
+    Mod+Alt+WheelScrollDown { focus-monitor-right; }
     //Mod+Shift+H     { focus-monitor-left; }
     //Mod+Shift+J     { focus-monitor-down; }
     //Mod+Shift+K     { focus-monitor-up; }
@@ -527,6 +524,10 @@ binds {
     //Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
     //Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
     //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    Mod+Shift+Alt+WheelScrollDown { move-column-to-monitor-right; }
+    Mod+Shift+Alt+WheelScrollUp   { move-column-to-monitor-left; }
+
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
@@ -562,8 +563,8 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+Shift+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+Shift+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+Ctrl+Alt+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+Alt+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }
@@ -574,8 +575,8 @@ binds {
     // horizontal scrolling; these binds replicate that.
     Mod+WheelScrollDown      { focus-column-right; }
     Mod+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Ctrl+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+WheelScrollUp   { move-column-left; }
 
     // Similarly, you can bind touchpad scroll "ticks".
     // Touchpad scrolling is continuous, so for these binds it is split into

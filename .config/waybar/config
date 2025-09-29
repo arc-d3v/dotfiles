@@ -59,7 +59,7 @@
     },
     "custom/recording": {
         "format": "{}",
-	"interval": 1,
+	"restart-interval": 1,
 	"return-type": "json",
 	"exec": "$HOME/.config/waybar/scripts/recording.sh status", 
 	"tooltip": true,

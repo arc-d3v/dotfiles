@@ -88,8 +88,6 @@ window#waybar.empty #window {
 }
 
 #custom-recording {
-  border-radius: 1rem 0px 0px 1rem;
-  margin-left: 1rem;
 }
 
 .recording {
@@ -123,6 +121,12 @@ window#waybar.empty #window {
 }
 
 #idle_inhibitor {
+  border-radius: 1rem 0px 0px 1rem;
+  margin-left: 1rem;
+}
+
+#idle_inhibitor.activated {
+  color: @green;
 }
 
 #cpu {
@@ -144,7 +148,7 @@ window#waybar.empty #window {
 }
 
 #custom-music {
-  color: @mauve;
+  /*color: @mauve;*/
   border-radius: 1rem;
 }
 

@@ -1,35 +1,14 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-# zstyle :compinstall filename '$HOME/.zshrc'
-
-# autoload -Uz compinit promptinit
-# compinit
-# promptinit
-# End of lines added by compinstall
-
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#if [ "$TERM" = "linux" ]; then
-#    ZSH_THEME="xiong-chiamiov-plus"
-#else
-#    ZSH_THEME="agnoster"
-#fi
 ZSH_THEME="agnoster"
-#ZSH_THEME="xiong-chiamiov-plus"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -91,7 +70,14 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
+
+source $ZSH/oh-my-zsh.sh
+source /usr/share/nvm/init-nvm.sh
 
 # User configuration
 
@@ -110,6 +96,8 @@ plugins=(git)
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
+export PATH=$PATH:~/.cargo/bin/
+
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
 # users are encouraged to define aliases within a top-level file in
@@ -121,13 +109,17 @@ plugins=(git)
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias psyu="paru -Syu"
+alias psyuu="paru -Syuu"
+alias prns="paru -Rns"
+alias pss="paru -Ss"
+alias prm="paru -R"
 
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/arc/.dart-cli-completion/zsh-config.zsh ]] && . /home/arc/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+if [ ! "$TERM" = "linux" ]; then
+    eval "$(starship init zsh)"
 fi
-
-source $ZSH/oh-my-zsh.sh
-
-source /usr/share/nvm/init-nvm.sh
-
