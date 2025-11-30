@@ -15,5 +15,19 @@ elif [ -z "${WAYLAND_DISPLAY}" ] && [ -n "$XDG_VTNR" ] && [ "${XDG_VTNR}" -eq 1 
     export QT_QPA_PLATFORMTHEME="qt6ct"
     export QT_QPA_PLATFORM="wayland"
     exec niri-session -l
+elif [ -z "${WAYLAND_DISPLAY}" ] && [ -n "$XDG_VTNR" ] && [ "${XDG_VTNR}" -eq 3 ]; then
+    export XCURSOR_SIZE="24"
+    export XDG_MENU_PREFIX="arch-"
+    export XDG_SESSION_DESKTOP="sway"
+    export XDG_CURRENT_DESKTOP="sway"
+    export XDG_SESSION_TYPE="wayland"
+    export XDG_BACKEND="wayland"
+    export GTK_THEME="Tokyonight-Dark"
+    export QT_QPA_PLATFORMTHEME="qt6ct"
+    export QT_QPA_PLATFORM="wayland"
+    export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
+
+    exec sway
 fi
+
 

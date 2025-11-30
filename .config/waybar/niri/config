@@ -5,7 +5,7 @@
     // Choose the order of the modules
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["custom/music"],
-    "modules-right": ["idle_inhibitor", "custom/recording", "privacy", "clock", "pulseaudio", "temperature", "tray", "custom/power"],
+    "modules-right": ["tray", "idle_inhibitor", "custom/recording", "privacy", "clock", "pulseaudio", "temperature"],
     "custom/os-logo": {
         "format": ""
     },
