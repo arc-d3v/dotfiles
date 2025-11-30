@@ -1,5 +1,9 @@
-[colors.primary]
-background = "#1A1B26"
+[general]
+import = [
+  "~/.config/alacritty/themes/themes/tokyo_night.toml"
+]
+#[colors.primary]
+#background = "#1A1B26"
 
 [font]
 size = 11

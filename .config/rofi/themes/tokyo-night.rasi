@@ -1,0 +1,16 @@
+* {
+    bg0:    #1f2231EE;
+    bg1:    #3B4252;
+    bg2:    #4C566A80;
+    bg3:    #aaacc5F2;
+    fg0:    #D8DEE9;
+    fg1:    #ECEFF4;
+    fg2:    #D8DEE9;
+    fg3:    #7d8596;
+}
+
+@import "main.rasi"
+
+element selected {
+    text-color: @bg1;
+}

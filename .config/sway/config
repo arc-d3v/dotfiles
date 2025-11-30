@@ -21,7 +21,7 @@ set $menu rofi -show drun -show-icons
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg $HOME/Pictures/Wallpapers/wallhaven-2y7529.png fill
+#output * bg $HOME/Pictures/Wallpapers/wallhaven-2y7529.png fill
 #
 # Example configuration:
 #
@@ -33,15 +33,22 @@ output * bg $HOME/Pictures/Wallpapers/wallhaven-2y7529.png fill
 output DP-2 power off
 exec_always sleep 0.5s && swaymsg "output DP-2 power on"
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway
+#exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway ELECTRON_OZONE_PLATFORM_HINT=auto
+
+exec systemctl import-environment
 
 ### Startup Programs
-# exec waybar
+#exec waybar
 #exec mako
 exec_always autotiling
+exec swww-daemon
+exec waybar -c ~/.config/waybar/sway/config
+exec $HOME/.wallpaper.sh
 #exec systemctl --user import-environment
 #exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec sleep 1s && chromium
+exec brave
+exec mullvad-vpn
+exec steam
 #exec sleep 2s && discord --enable-features=UseOzonePlatform --ozone-platform=wayland
 #exec sleep 1s && steam
 # exec sleep 1s && $HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --enable-features=UseOzonePlatform --ozone-platform=wayland
@@ -64,9 +71,9 @@ assign [class="steam"] workspace 3
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 exec swayidle -w \
-         timeout 300 'swaylock -f' \
+         timeout 300 'pidof hyprlock || hyprlock' \
          timeout 380 'swaymsg "output * power off"' resume 'swaymsg "output DP-1 power on" && sleep 0.5s && swaymsg "output DP-2 power on"' \
-         before-sleep 'swaylock'
+         before-sleep 'hyprlock'
 
 
 ### Input configuration
@@ -107,7 +114,7 @@ input type:keyboard {
 
     bindsym $mod+e exec thunar
 
-    bindsym $mod+g exec google-chrome-stable
+    bindsym $mod+g exec brave
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -120,7 +127,8 @@ input type:keyboard {
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+k exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+k exec loginctl terminate-user ""
+    #bindsym $mod+Shift+k exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -245,16 +253,16 @@ bindsym $mod+Shift+r mode "resize"
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Special key to take a screenshot with grim
-    bindsym Print exec grimshot savecopy screen $XDG_SCREENSHOTS_DIR/$(date +%Y-%m-%d-%H:%M:%S)_screenshot.png
-    bindsym $mod+Shift+Print exec grimshot savecopy area $XDG_SCREENSHOTS_DIR/$(date +%Y-%m-%d-%H:%M:%S)_screenshot.png
-    bindsym $mod+l exec swaylock
+    bindsym Print exec grimshot savecopy screen "$XDG_SCREENSHOTS_DIR/Screenshot from $(date +%Y-%m-%d %H-%M-%S).png"
+    bindsym $mod+Shift+Print exec grimshot savecopy area "$XDG_SCREENSHOTS_DIR/Screenshot from $(date +%Y-%m-%d %H-%M-%S).png"
+    bindsym $mod+l exec hyprlock
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    swaybar_command waybar
+#bar {
+    #swaybar_command waybar -c ~/.config/waybar/sway/config
 #    position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
@@ -266,7 +274,7 @@ bar {
 #        background #323232
 #        inactive_workspace #32323200 #32323200 #5c5c5c
 #    }
-}
+#}
 
 #
 # Visual:
@@ -278,7 +286,7 @@ for_window [class="^(steam)$"] opacity 0.9
 for_window [app_id="^(discord)$"] opacity 0.9
 for_window [app_id="^(foot)$"] opacity 0.9
 for_window [app_id="^(Alacritty)$"] opacity 0.9
-exec /usr/share/sway-contrib/inactive-windows-transparency.py --opacity 0.85 --focused 0.9
+#exec /usr/share/sway-contrib/inactive-windows-transparency.py --opacity 0.85 --focused 0.9
 
 
 #
@@ -288,11 +296,14 @@ exec /usr/share/sway-contrib/inactive-windows-transparency.py --opacity 0.85 --f
     blur_passes 2
     blur_radius 5
     shadows enable
-    shadow_color #595959ab
+    shadow_blur_radius 30
+    shadow_offset 0 5
+    shadow_color #595959aa
     shadow_inactive_color #1e202966
     corner_radius 10
 
-#
+client.focused #7fc8ff #7fc8ff #7fc8ff #7fc8ff #7fc8ff
+client.focused_inactive  #505050 #505050 #505050 #505050 #505050
 # Remove window title:
 #
     default_border pixel

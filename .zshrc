@@ -109,11 +109,16 @@ export PATH=$PATH:~/.cargo/bin/
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias psyu="paru -Syu"
-alias psyuu="paru -Syuu"
-alias prns="paru -Rns"
-alias pss="paru -Ss"
-alias prm="paru -R"
+alias pasyu="paru -Syu"
+alias pasyuu="paru -Syuu"
+alias parns="paru -Rns"
+alias pass="paru -Ss"
+alias parm="paru -R"
+
+alias yasyu="yay -Syu"
+alias yasyuu="yay -Syuu"
+alias yar="yay -R"
+alias yarns="yay -Rns"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
